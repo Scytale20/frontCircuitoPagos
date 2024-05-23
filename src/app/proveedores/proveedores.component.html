@@ -1,0 +1,30 @@
+<div class="contenedor-tabla container mt-4 p-4 border rounded">
+    <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger" class="table table-striped border">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Código</th>
+            <th>Razón Social</th>
+            <th>CUIT</th>
+            <th>Domicilio</th>
+            <th>Condición IVA</th>
+          </tr>
+        </thead>
+        <tbody>
+    
+            @for(proveedor of proveedores; track proveedor.id){
+              <tr>
+                <td>{{ proveedor.id }}</td>
+                <td>{{ proveedor.codigo }}</td>
+                <td>{{ proveedor.razonSocial }}</td>
+                <td>{{ proveedor.cuit }}</td>
+                <td>{{ proveedor.domicilio }}</td>
+                <td>{{ proveedor.condicionIva }}</td>
+              </tr>
+           } 
+    
+            </tbody>
+        
+      </table>
+    
+</div>

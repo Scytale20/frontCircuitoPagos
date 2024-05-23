@@ -1,0 +1,10 @@
+.contenedor-tabla{
+    min-height: 85vh; 
+    max-height: 85vh;
+    min-width: 90vw;
+    max-width: 90vw;
+    margin-left: auto;
+    overflow-y: auto;
+    overflow-x: auto;
+    background-color: #f8f9fa; 
+}
