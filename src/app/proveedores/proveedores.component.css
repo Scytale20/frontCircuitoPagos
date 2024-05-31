@@ -1,3 +1,19 @@
+.modal-content{
+    background-color: hsla(220,10%,98%,1);
+}
+
+.header{
+    background-image: url("../../assets/img/encabezado.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 172px;        
+}
+.form-title{
+    padding-top: 90px;
+}
+
+
+
 .contenedor-tabla{
     min-height: 85vh; 
     max-height: 85vh;
@@ -8,3 +24,8 @@
     overflow-x: auto;
     background-color: #f8f9fa; 
 }
+table .table-head{
+    color: white !important;
+    background-color: #0F4578 !important;
+}
+

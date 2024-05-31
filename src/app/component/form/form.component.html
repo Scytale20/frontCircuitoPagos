@@ -1,0 +1,93 @@
+<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+  data-bs-whatever="@getbootstrap">
+  Click!
+</button>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header header text-center mb-2">
+        <h1 class="modal-title fs-2 w-100 text-muted" id="exampleModalLabel">
+          Alta
+        </h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body container mt-3 mb-3 d-flex justify-content-center">
+        <form method="POST" class="body-form">
+          <div>
+            <input type="hidden" class="form-control" name="id" value="<?php echo $dato['id'];?>" required="" />
+          </div>
+
+          <div class="ps-5 pe-5">
+            <div class="d-flex justify-content-around mb-3">
+              <div class="">
+                <label for="fecha" class="col-form-label text-muted">Fecha Remito:</label>
+                <input type="date" class="form-control form-control-sm" id="fecha_remito" name="fecha_remito" />
+              </div>
+              <div class="ms-5">
+                <label for="fechaD" class="col-form-label text-muted">Fecha Descarga:</label>
+                <input type="date" class="form-control form-control-sm" id="fecha_descarga" name="fecha_descarga" />
+              </div>
+            </div>
+            <div class="mb-2">
+              <label for="proveedor" class="form-label text-muted">Proveedor:</label>
+              <input type="text" class="form-control form-control-sm" id="proveedor" name="proveedor" />
+            </div>
+            <div class="mb-2">
+              <label for="yacimiento" class="form-label text-muted">Yacimiento:</label>
+              <input type="text" class="form-control form-control-sm" id="yacimiento" name="yacimiento" />
+            </div>
+            <div class="row mb-2">
+              <div class="col-6">
+                <label for="numero" class="col-form-label text-muted">Remito:</label>
+                <input type="text" class="form-control form-control-sm" id="numero" name="numero" />
+              </div>
+              <div class="col-6">
+                <label for="producto" class="col-form-label text-muted">Producto:</label>
+                <input type="text" class="form-control form-control-sm" id="producto" name="producto" />
+              </div>
+            </div>
+            <div class="row mb-4">
+              <div class="col-6">
+                <label for="nominal" class="col-form-label text-muted">Nominal:</label>
+                <input type="text" class="form-control form-control-sm" id="nominal" name="nominal" />
+              </div>
+              <div class="col-6">
+                <label for="descargado" class="col-form-label text-muted">Descargado:</label>
+                <input type="text" class="form-control form-control-sm" id="descargado" name="descargado" />
+              </div>
+            </div>
+            <div class="mb-2">
+              <label for="emp_flete" class="col-form-label text-muted">Emp.Flete:</label>
+              <input type="text" class="form-control form-control-sm" id="emp_flete" name="emp_flete" />
+            </div>
+            <div class="mb-3">
+              <label for="chofer" class="col-form-label text-muted">Chofer:</label>
+              <input type="text" class="form-control form-control-sm" id="chofer" name="chofer" />
+            </div>
+            <div class="row mb-2">
+              <div class="col-6">
+                <label for="pat_camion" class="col-form-label text-muted">Pat.Camion:</label>
+                <input type="text" class="form-control form-control-sm" id="pat_camion" name="pat_camion" />
+              </div>
+              <div class="col-6">
+                <label for="pat_acoplado" class="col-form-label text-muted">Pat.Acoplado:</label>
+                <input type="text" class="form-control form-control-sm" id="pat_acoplado" name="pat_acoplado" />
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <div class="mb-1 d-flex justify-content-end gap-4 mb-4">
+          <button type="submit" class="btn btn-outline-primary" name="modificarT" value="modificarT">
+            Modificar
+          </button>
+          <button type="button" class="btn btn-outline-primary" onclick="location.href='listado-admin.php'">
+            Volver
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

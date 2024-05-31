@@ -4,12 +4,14 @@ import { ProveedoresService } from '../core/Service/proveedores.service';
 import { HttpClientModule } from '@angular/common/http';
 import { DataTablesModule } from "angular-datatables";
 import { Subject } from 'rxjs';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+
 
 
 @Component({
   selector: 'app-proveedores',
   standalone: true,
-  imports: [HttpClientModule, DataTablesModule],
+  imports: [HttpClientModule, DataTablesModule, ReactiveFormsModule],
   templateUrl: './proveedores.component.html',
   styleUrl: './proveedores.component.css'
 })
@@ -19,8 +21,18 @@ export class ProveedoresComponent implements OnInit {
   dtTrigger:Subject<any> = new Subject<any>();
   proveedores: Proveedor[] = []
 
-  private proveedorService = inject(ProveedoresService)
 
+  nuevoProveedorForm = new FormGroup({
+    codigo: new FormControl(''),
+    proveedor: new FormControl(''),
+    cuit: new FormControl('30716119951'),
+    domicilio: new FormControl(''),
+    condicionIva: new FormControl('')
+  });
+
+  private proveedorService = inject(ProveedoresService)
+  
+  
   
   ngOnInit(): void {
     this.dtoptions = {
@@ -35,6 +47,10 @@ export class ProveedoresComponent implements OnInit {
       this.dtTrigger.next(null);      
     })
       
+  }
+
+  onClickProveedor():void{
+    console.log(this.nuevoProveedorForm.get('cuit')?.value)
   }
 
 }
