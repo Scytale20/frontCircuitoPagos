@@ -7,7 +7,7 @@
     Nuevo
   </button>
   
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" (show.bs.modal)="nuevoProveedorModal()">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header header text-center mb-2">
@@ -23,35 +23,79 @@
   
               <div class="mb-2">
                 <label for="codigo" class="form-label text-muted">Codigo:</label>
-                <input type="number" class="form-control" id="codigo" formControlName="codigo" />
+                <input type="number" class="form-control" id="codigo" formControlName="codigo" readonly>
               </div>
+
               <div class="mb-2">
                 <label for="proveedor" class="form-label text-muted">Razon Social:</label>
-                <input type="text" class="form-control" id="proveedor" formControlName="proveedor" />
+                <input type="text" class="form-control" id="proveedor" formControlName="proveedor" [ngClass]="{
+                  'is-invalid': proveedorField.errors && proveedorField.touched,
+                  'is-valid': !proveedorField.errors && proveedorField.touched
+                }"/>
+
+                @if(proveedorField.hasError('required')){
+                  <p class="invalid-feedback">
+                    Ingrese Razon Social
+                  </p>
+                }
               </div>
+
               <div class="mb-2">
                 <label for="cuit" class="form-label text-muted">CUIT:</label>
-                <input type="number" class="form-control" id="cuit" formControlName="cuit" />
+                <input type="text" class="form-control" id="cuit" formControlName="cuit" [ngClass]="{
+                  'is-invalid': cuitField.errors && cuitField.touched,
+                  'is-valid': !cuitField.errors && cuitField.touched
+                }"/>
+
+              @if(cuitField.hasError('required')){                
+                  <p class="invalid-feedback">
+                    Campo requerido
+                  </p>
+                }@else if(cuitField.hasError('minlength') || cuitField.hasError('maxlength')) {
+                  <p class="invalid-feedback">
+                    Debe contener 11 caracteres
+                  </p>
+                }
               </div>
+              
   
               <div class="mb-4">
                 <label for="domicilio" class="col-form-label text-muted">Domicilio:</label>
-                <input type="text" class="form-control" id="domicilio" formControlName="domicilio" />
+                <input type="text" class="form-control" id="domicilio" formControlName="domicilio" [ngClass]="{
+                  'is-invalid': domicilioField.errors && domicilioField.touched,
+                  'is-valid': !domicilioField.errors && domicilioField.touched
+                }"/>
+
+                @if(proveedorField.hasError('required')){
+                  <p class="invalid-feedback">
+                    Ingrese Domicilio
+                  </p>
+                }
               </div>
   
               <div class="">
                 <label for="condicionIva" class="col-form-label text-muted">Selecciona una opción:</label>
-                <select class="form-select" id="condicionIva" formControlName="condicionIva">
+                <select class="form-select" id="condicionIva" formControlName="condicionIva" [ngClass]="{
+                  'is-invalid': condicionIvaField.errors && condicionIvaField.touched,
+                  'is-valid': !condicionIvaField.errors && condicionIvaField.touched
+                }">
                   <option selected disabled value="" class="text-muted">Condicion IVA</option>
-                  <option value="">Responsable Inscripto</option>
-                  <option value="">Responsable no Inscripto</option>
-                  <option value="">No Responsable</option>
-                  <option value="">Sujeto Exento</option>
-                  <option value="">Consumidor Final</option>
-                  <option value="">Responsable Monotributo</option>
-                  <option value="">Sujeto no Categorizado</option>
-                  <option value="">Monotributista Social</option>
+                  <option value="Responsable Inscripto">Responsable Inscripto</option>
+                  <option value="Responsable no Inscripto">Responsable no Inscripto</option>
+                  <option value="No Responsable">No Responsable</option>
+                  <option value="Sujeto Exento">Sujeto Exento</option>
+                  <option value="Consumidor Final">Consumidor Final</option>
+                  <option value="Responsable Monotributo">Responsable Monotributo</option>
+                  <option value="Sujeto no Categorizado">Sujeto no Categorizado</option>
+                  <option value="Monotributista Social">Monotributista Social</option>
                 </select>
+
+                @if(condicionIvaField.hasError('required')){
+                  <p class="invalid-feedback">
+                    Selecciona una opcion
+                  </p>
+                }
+
               </div>
   
             </div>
@@ -60,7 +104,7 @@
         <div class="modal-footer">
           <div class="mb-1 d-flex justify-content-end gap-4 mb-4">
             <button class="btn btn-outline-primary" (click)="onClickProveedor()">
-              Alta Proveedor
+              Registrar
             </button>            
           </div>
         </div>

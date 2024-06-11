@@ -11,9 +11,19 @@ export class ProveedoresService {
 
   constructor(private http: HttpClient) { }
 
-  getProveedores(): Observable<any[]> {
-    return this.http.get<any>(this.apiUrl);
+  getProveedores(): Observable<Proveedor[]> {
+    return this.http.get<Proveedor[]>(this.apiUrl);
 }
+
+getLastCodigo(): Observable<number>{
+  return this.http.get<number>(`${this.apiUrl}/lastCodigo`);
+}
+
+getNextCodigo(): Observable<number>{
+  return this.http.get<number>(`${this.apiUrl}/nextCodigo`);
+}
+
+
 
 
 }
