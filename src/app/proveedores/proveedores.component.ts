@@ -6,6 +6,7 @@ import { DataTablesModule } from "angular-datatables";
 import { Subject } from 'rxjs';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgClass } from '@angular/common';
+import { error } from 'jquery';
 
 
 
@@ -21,16 +22,18 @@ export class ProveedoresComponent implements OnInit {
   dtoptions = {}
   dtTrigger:Subject<any> = new Subject<any>();
   proveedores: Proveedor[] = [] 
+  
 
   private proveedorService = inject(ProveedoresService);
-  private readonly formBuilder = inject(FormBuilder);
+  private formBuilder = inject(FormBuilder);
 
   nuevoProveedorForm = this.formBuilder.nonNullable.group({
-    codigo: ['', Validators.required],
-    proveedor: ['', Validators.required],
+    id: [null],
+    codigo: ['', [Validators.required]],
+    razonSocial: ['', [Validators.required]],
     cuit:['', [Validators.required, Validators.maxLength(11), Validators.minLength(11) ]],
-    domicilio: ['', Validators.required],
-    condicionIva: ['', Validators.required]
+    domicilio: ['', [Validators.required]],
+    condicionIva: ['', [Validators.required]]
   });  
   
   
@@ -50,16 +53,31 @@ export class ProveedoresComponent implements OnInit {
       
   }
 
-  onClickProveedor():void{
-    //console.log(this.nuevoProveedorForm.get('cuit')?.value) para versiones de Angular de 14 hacia abajo
-    const cuit = this.nuevoProveedorForm.controls.cuit.value
-    
-    console.log("numero de Cuit " + cuit)
-    console.log("Cuit Valido?  " + this.nuevoProveedorForm.controls.cuit.valid)
-    console.log("formulario valido?? " + this.nuevoProveedorForm.valid)
-  }
+  registrarProveedor(){
+    let nuevoProveedor: Proveedor = this.nuevoProveedorForm.value as Proveedor   
 
-  setCodigo():void{
+    console.log('Nuevo proveedor:', JSON.stringify(nuevoProveedor));
+
+    if(this.nuevoProveedorForm.valid){
+      this.proveedorService.registrarProveedor(nuevoProveedor).subscribe(
+        response => {
+          //this.proveedores.push(nuevoProveedor);
+          console.log('Proveedor registrado: ', response)
+        },
+        error => {
+          console.error('Error registrando el proveedor: ', error)
+          
+        }
+      );
+    }else{
+      console.log('Formulario no valido');
+    }
+  }
+  
+  //console.log(this.nuevoProveedorForm.get('cuit')?.value) para versiones de Angular de 14 hacia abajo
+  
+  
+  private setCodigo():void{
     this.proveedorService.getNextCodigo().subscribe(
       nextCodigo => {
         this.nuevoProveedorForm.patchValue({codigo: nextCodigo.toString()});
@@ -78,7 +96,7 @@ export class ProveedoresComponent implements OnInit {
     return this.nuevoProveedorForm.controls.codigo
   }
   get proveedorField(): FormControl<string>{
-    return this.nuevoProveedorForm.controls.proveedor
+    return this.nuevoProveedorForm.controls.razonSocial
   }
   get cuitField(): FormControl<string>{
     return this.nuevoProveedorForm.controls.cuit

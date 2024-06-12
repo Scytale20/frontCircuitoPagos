@@ -17,18 +17,19 @@
         </div>
 
         <div class="modal-body mt-3 mb-3 p-5">
-          <form [formGroup]="nuevoProveedorForm">           
+          <form [formGroup]="nuevoProveedorForm" (ngSubmit)="registrarProveedor()"> 
+            <input type="hidden" name="id" formControlName="id" />          
   
             <div class="ps-1 pe-1">
   
               <div class="mb-2">
                 <label for="codigo" class="form-label text-muted">Codigo:</label>
-                <input type="number" class="form-control" id="codigo" formControlName="codigo" readonly>
+                <input type="text" class="form-control" id="codigo" formControlName="codigo" readonly>
               </div>
 
               <div class="mb-2">
-                <label for="proveedor" class="form-label text-muted">Razon Social:</label>
-                <input type="text" class="form-control" id="proveedor" formControlName="proveedor" [ngClass]="{
+                <label for="razonSocial" class="form-label text-muted">Razon Social:</label>
+                <input type="text" class="form-control" id="razonSocial" formControlName="razonSocial" [ngClass]="{
                   'is-invalid': proveedorField.errors && proveedorField.touched,
                   'is-valid': !proveedorField.errors && proveedorField.touched
                 }"/>
@@ -99,14 +100,14 @@
               </div>
   
             </div>
+            <div class="modal-footer">
+              <div class="mb-1 d-flex justify-content-end gap-4 mb-4">
+                <button type="submit" class="btn btn-outline-primary">
+                  Registrar
+                </button>            
+              </div>
+            </div>
           </form>
-        </div>
-        <div class="modal-footer">
-          <div class="mb-1 d-flex justify-content-end gap-4 mb-4">
-            <button class="btn btn-outline-primary" (click)="onClickProveedor()">
-              Registrar
-            </button>            
-          </div>
         </div>
       </div>
     </div>
