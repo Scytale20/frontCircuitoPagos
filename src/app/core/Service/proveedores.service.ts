@@ -15,6 +15,10 @@ export class ProveedoresService {
     return this.http.get<Proveedor[]>(this.apiUrl);
 }
 
+registrarProveedor(proveedor: any): Observable<any>{
+  return this.http.post<any>(`${this.apiUrl}/registrar`, proveedor);
+}
+
 getLastCodigo(): Observable<number>{
   return this.http.get<number>(`${this.apiUrl}/lastCodigo`);
 }
