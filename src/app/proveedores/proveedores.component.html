@@ -2,12 +2,12 @@
   
 <!-- Modal nuevo proveedor -->
 
-  <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal"
-    data-bs-whatever="@getbootstrap">
+  <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#proveedorModal"
+    data-bs-whatever="@getbootstrap" (click)="nuevoProveedorModal()">
     Nuevo
   </button>
   
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" (show.bs.modal)="nuevoProveedorModal()">
+  <div class="modal fade" id="proveedorModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header header text-center mb-2">
@@ -127,11 +127,13 @@
             <th>CUIT</th>
             <th>Domicilio</th>
             <th>Condición IVA</th>
+            <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
     
-            @for(proveedor of proveedores; track proveedor.id){
+            @for(proveedor of proveedores; track proveedor.id; let i = $index){              
+              
               <tr>
                 
                 <td>{{ proveedor.codigo }}</td>
@@ -139,6 +141,7 @@
                 <td>{{ proveedor.cuit }}</td>
                 <td>{{ proveedor.domicilio }}</td>
                 <td>{{ proveedor.condicionIva }}</td>
+                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#proveedorModal" (click)="editarProveedor(i)">mod</button></td>
               </tr>
            } 
     
