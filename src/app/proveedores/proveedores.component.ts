@@ -22,7 +22,10 @@ export class ProveedoresComponent implements OnInit {
 
   dtoptions = {}
   dtTrigger:Subject<any> = new Subject<any>();
-  proveedores: Proveedor[] = [] 
+  proveedores: Proveedor[] = []; 
+  registrar: Boolean = false;
+  actualizar: Boolean = false;
+  
   
 
   private proveedorService = inject(ProveedoresService);
@@ -128,10 +131,16 @@ export class ProveedoresComponent implements OnInit {
       domicilio: proveedor.domicilio, 
       condicionIva: proveedor.condicionIva
     });
-    
-
   }
 
+   botonRegistrar(){
+    this.registrar = true;
+    this.actualizar = false;
+  }  
+   botonActualizar(){
+    this.registrar = false;
+    this.actualizar = true;
+  }
   
 
 

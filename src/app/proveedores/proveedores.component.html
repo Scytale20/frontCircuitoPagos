@@ -3,7 +3,7 @@
 <!-- Modal nuevo proveedor -->
 
   <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#proveedorModal"
-    data-bs-whatever="@getbootstrap" (click)="nuevoProveedorModal()">
+    data-bs-whatever="@getbootstrap" (click)="nuevoProveedorModal()" (click)="botonRegistrar()">
     Nuevo
   </button>
   
@@ -24,7 +24,7 @@
   
               <div class="mb-2">
                 <label for="codigo" class="form-label text-muted">Codigo:</label>
-                <input type="text" class="form-control" id="codigo" formControlName="codigo" readonly>
+                <input type="text" class="form-control text-muted" id="codigo" formControlName="codigo" readonly>
               </div>
 
               <div class="mb-2">
@@ -100,13 +100,24 @@
               </div>
   
             </div>
+            
             <div class="modal-footer">
-              <div class="mb-1 d-flex justify-content-end gap-4 mb-4">
+              <div class="mb-1 d-flex justify-content-end gap-4 mb-4">               
+                @if(registrar){
                 <button type="submit" class="btn btn-outline-primary">
                   Registrar
-                </button>            
-              </div>
+                </button>                       
+              }
+              @if(actualizar){
+                <button type="submit" class="btn btn-outline-primary">
+                  Actualizar
+                </button>                       
+              }
             </div>
+              
+            
+            </div>
+          
           </form>
         </div>
       </div>
@@ -141,7 +152,7 @@
                 <td>{{ proveedor.cuit }}</td>
                 <td>{{ proveedor.domicilio }}</td>
                 <td>{{ proveedor.condicionIva }}</td>
-                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#proveedorModal" (click)="editarProveedor(i)">mod</button></td>
+                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#proveedorModal" (click)="editarProveedor(i); botonActualizar()">mod</button></td>
               </tr>
            } 
     
