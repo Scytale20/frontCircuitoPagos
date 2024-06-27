@@ -12,7 +12,13 @@
     padding-top: 90px;
 }
 
-
+.color-footer{
+    background-color: #0F4578;
+    height: 30px;
+    width: auto;
+    margin: 0;
+    
+}
 
 .contenedor-tabla{
     min-height: 85vh; 
@@ -24,8 +30,5 @@
     overflow-x: auto;
     background-color: #f8f9fa; 
 }
-table .table-head{
-    color: white !important;
-    background-color: #0F4578 !important;
-}
+
 

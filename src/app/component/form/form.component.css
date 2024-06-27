@@ -1,4 +1,4 @@
-.modal-body{
+.modal-content{
     background-color: hsla(220,10%,98%,1);
 }
 
@@ -10,4 +10,12 @@
 }
 .form-title{
     padding-top: 90px;
+}
+
+.color-footer{
+    background-color: #0F4578;
+    height: 25px;
+    width: auto;
+    margin: 0;
+    
 }

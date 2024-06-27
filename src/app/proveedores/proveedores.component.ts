@@ -6,7 +6,9 @@ import { DataTablesModule } from "angular-datatables";
 import { Subject } from 'rxjs';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgClass } from '@angular/common';
-import { error } from 'jquery';
+
+
+
 
 
 
@@ -20,7 +22,7 @@ import { error } from 'jquery';
 export class ProveedoresComponent implements OnInit {
 
 
-  dtoptions = {}
+  dtoptions: any = {};
   dtTrigger:Subject<any> = new Subject<any>();
   proveedores: Proveedor[] = []; 
   registrar: Boolean = false;
@@ -43,16 +45,24 @@ export class ProveedoresComponent implements OnInit {
   
   ngOnInit(): void {
     this.dtoptions = {
-      pagingType:'full_numbers'
+      pagingType:'full_numbers',
+      destroy: true //para que pueda cargarse luego de hacer una modificacion, sin que se produzcan errores. 
+       
     };
     // Llama al método para obtener los proveedores al inicializar el componente
     this.getProveedores();     
   }
 
+  ngOnDestroy(): void {
+    // Desuscribir el Subject para evitar fugas de memoria
+    this.dtTrigger.unsubscribe();
+    
+  }
+
   private getProveedores():void{
     this.proveedorService.listadoProveedores().subscribe(data => {
       this.proveedores = data;
-      this.dtTrigger.next(null);      
+      this.dtTrigger.next(this.dtoptions);      
     });      
   }  
   
