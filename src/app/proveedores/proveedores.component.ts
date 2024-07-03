@@ -46,7 +46,22 @@ export class ProveedoresComponent implements OnInit {
   ngOnInit(): void {
     this.dtoptions = {
       pagingType:'full_numbers',
-      destroy: true //para que pueda cargarse luego de hacer una modificacion, sin que se produzcan errores. 
+      lengthMenu:[5, 10, 15, 20, 25],
+      pageLength:10,
+      order:[1, 'asc'],
+      destroy: true, //para que pueda cargarse luego de hacer una modificacion, sin que se produzcan errores. 
+      scrollY: '59vh',
+      scrollColapse: true,
+      autoWidth: false,
+      language:{
+        searchPlaceholder:'Buscar proveedor'
+      }
+
+      //pageLength: 7,
+      //paging: false,
+      //ordering: false,
+      //searching: false,
+      //lengthChange:false
        
     };
     // Llama al método para obtener los proveedores al inicializar el componente

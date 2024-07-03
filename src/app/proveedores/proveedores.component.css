@@ -1,3 +1,15 @@
+
+
+/*----------MODAL-------------- */
+.bg-buttons{
+    background-color: #41729F;        
+}
+
+div button i.agregar{
+    font-size: 1.3rem;
+    margin-left: 15vh;
+}
+
 .modal-content{
     background-color: hsla(220,10%,98%,1);
 }
@@ -14,21 +26,32 @@
 
 .color-footer{
     background-color: #0F4578;
-    height: 30px;
+    background-size: cover;
+    height: 35px;
     width: auto;
-    margin: 0;
-    
+    margin: 0;    
 }
 
+/*-------CIERRA MODAL----------*/
+
+/*----------TABLA-------------*/
+
 .contenedor-tabla{
-    min-height: 85vh; 
-    max-height: 85vh;
-    min-width: 90vw;
-    max-width: 90vw;
+    min-height: 80vh; 
+    max-height: 80vh;
+    min-width: 93vw;
+    max-width: 93vw;
     margin-left: auto;
-    overflow-y: auto;
-    overflow-x: auto;
+    overflow-y: hidden;
+    overflow-x: hidden;
     background-color: #f8f9fa; 
 }
+
+/*table.dataTable thead{
+    font-size: 0.8em;
+    color: #0F4578 !important;
+}*/
+
+/*-------CIERRA TABLA---------*/
 
 

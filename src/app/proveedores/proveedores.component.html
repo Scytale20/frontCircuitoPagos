@@ -1,10 +1,12 @@
-<div class="container mt-4">
-  <!-- Modal nuevo proveedor -->
-
-  <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#proveedorModal"
-    data-bs-whatever="@getbootstrap" (click)="nuevoProveedorModal()" (click)="botonRegistrar()">    
-     Nuevo
+<div class="container-fluid bg-buttons d-flex">
+  <button type="button" class="btn" title="Agregar Proveedor" data-bs-toggle="modal" data-bs-target="#proveedorModal"
+    data-bs-whatever="@getbootstrap"  (click)="nuevoProveedorModal()" (click)="botonRegistrar()">
+    <i class="agregar bi bi-plus-lg text-white"></i>
   </button>
+</div>
+
+<div class="container">
+  <!-- Modal nuevo proveedor -->
 
   <div class="modal fade" id="proveedorModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -125,10 +127,10 @@
 
 <!--Cierra Modal-->
 
-<div class="contenedor-tabla container mt-4 p-4 border rounded">
-  <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger" class="table table-striped border">
-    <thead class="table-dark">
-      <tr>
+<div class="contenedor-tabla container mt-2 p-2 border rounded">
+  <table class="table table-sm table-hover border" datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger" >
+    <thead class="table-light">
+      <tr class="">
         <th>Código</th>
         <th>Razón Social</th>
         <th>CUIT</th>
@@ -147,7 +149,7 @@
         <td>{{ proveedor.domicilio }}</td>
         <td>{{ proveedor.condicionIva }}</td>
         <td>
-          <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#proveedorModal"
+          <button class="btn text-primary" title="Editar Proveedor" data-bs-toggle="modal" data-bs-target="#proveedorModal"
             (click)="editarProveedor(i); botonActualizar()">
             <i class="bi bi-pencil-square" style="font-size: 1rem;"></i>
           </button>
