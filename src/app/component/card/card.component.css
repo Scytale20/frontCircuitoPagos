@@ -1,0 +1,14 @@
+.card{
+    height: 35vh;
+    transition: box-shadow 0.3s ease;
+}
+.card:hover{
+    box-shadow: 0rem 0.5rem 0.5rem 0.5rem rgba(0, 0, 0, 0.175) !important;
+    border-bottom: 4px solid #0F4578;
+    cursor: pointer;
+}
+
+i{
+    font-size: 2rem;
+    
+}

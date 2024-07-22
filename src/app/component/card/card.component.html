@@ -1,0 +1,13 @@
+<div class="card text-bg-light shadow">
+    <div class="card-body text-center" routerLink="/pagos">
+        <i [class]="icon"></i>
+        <h5 class="card-title text-center mt-2">{{ title }}</h5>
+    </div>
+
+    <div class="d-flex justify-content-evenly mb-4">
+        @for(button of buttons; track button.text){
+        <a class="btn btn-primary" [routerLink]="button.link" >{{button.text}}</a>
+    }
+        
+    </div>
+</div>
