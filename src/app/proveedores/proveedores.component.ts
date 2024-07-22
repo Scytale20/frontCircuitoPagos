@@ -6,7 +6,9 @@ import { DataTablesModule } from "angular-datatables";
 import { Subject } from 'rxjs';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgClass } from '@angular/common';
-import { error } from 'jquery';
+
+
+
 
 
 
@@ -19,16 +21,20 @@ import { error } from 'jquery';
 })
 export class ProveedoresComponent implements OnInit {
 
-  dtoptions = {}
+
+  dtoptions: any = {};
   dtTrigger:Subject<any> = new Subject<any>();
-  proveedores: Proveedor[] = [] 
+  proveedores: Proveedor[] = []; 
+  registrar: Boolean = false;
+  actualizar: Boolean = false;
+  
   
 
   private proveedorService = inject(ProveedoresService);
   private formBuilder = inject(FormBuilder);
 
   nuevoProveedorForm = this.formBuilder.nonNullable.group({
-    id: [null],
+    id: [''],
     codigo: ['', [Validators.required]],
     razonSocial: ['', [Validators.required]],
     cuit:['', [Validators.required, Validators.maxLength(11), Validators.minLength(11) ]],
@@ -39,58 +45,129 @@ export class ProveedoresComponent implements OnInit {
   
   ngOnInit(): void {
     this.dtoptions = {
-      pagingType:'full_numbers'
+      pagingType:'full_numbers',
+      lengthMenu:[5, 10, 15, 20, 25],
+      pageLength:10,
+      order:[1, 'asc'],
+      destroy: true, //para que pueda cargarse luego de hacer una modificacion, sin que se produzcan errores. 
+      scrollY: '59vh',
+      scrollColapse: true,
+      autoWidth: false,
+      language:{
+        searchPlaceholder:'Buscar proveedor'
+      }
+
+      //pageLength: 7,
+      //paging: false,
+      //ordering: false,
+      //searching: false,
+      //lengthChange:false
+       
     };
-    this.getProveedores(); // Llama al método para obtener los proveedores al inicializar el componente
+    // Llama al método para obtener los proveedores al inicializar el componente
+    this.getProveedores();     
+  }
+
+  ngOnDestroy(): void {
+    // Desuscribir el Subject para evitar fugas de memoria
+    this.dtTrigger.unsubscribe();
     
   }
 
   private getProveedores():void{
-    this.proveedorService.getProveedores().subscribe(data => {
+    this.proveedorService.listadoProveedores().subscribe(data => {
       this.proveedores = data;
-      this.dtTrigger.next(null);      
-    })
-      
-  }
-
+      this.dtTrigger.next(this.dtoptions);      
+    });      
+  }  
+  
   registrarProveedor(){
-    let nuevoProveedor: Proveedor = this.nuevoProveedorForm.value as Proveedor   
+    let nuevoProveedor: Proveedor = this.nuevoProveedorForm.value as Proveedor;
+    //console.log('Nuevo proveedor:', JSON.stringify(nuevoProveedor)); //para ver el JSON de una variable por consola    
+    
+    if (this.nuevoProveedorForm.controls.id.value === ''){
+      delete nuevoProveedor.id;  
 
-    console.log('Nuevo proveedor:', JSON.stringify(nuevoProveedor));
-
-    if(this.nuevoProveedorForm.valid){
-      this.proveedorService.registrarProveedor(nuevoProveedor).subscribe(
-        response => {
-          //this.proveedores.push(nuevoProveedor);
-          console.log('Proveedor registrado: ', response)
-        },
-        error => {
-          console.error('Error registrando el proveedor: ', error)
-          
+      if(this.nuevoProveedorForm.valid){
+        this.proveedorService.registrarProveedor(nuevoProveedor).subscribe(
+          (nuevoProveedor: Proveedor) => {            
+           this.proveedores.push(nuevoProveedor);          
+            console.log('Proveedor registrado: ', nuevoProveedor)
+          },
+          error => {
+            console.error('Error registrando el proveedor: ', error)
+          }
+        );
+      }
+    }else if(this.nuevoProveedorForm.valid){
+      this.proveedorService.modificarProveedor(nuevoProveedor).subscribe(
+        () => {          
+          this.getProveedores()
         }
       );
+      console.log('Actualizacion realizada');
     }else{
-      console.log('Formulario no valido');
+      console.log('revisar los campos que no cumplen, no se actualiza proveedor')
     }
   }
+
+  editarProveedor(indice: number){
+    let proveedor: Proveedor = this.proveedores[indice];
+    this.loadForm(proveedor)
+    //console.log(JSON.stringify(this.nuevoProveedorForm.value))
+  }
   
-  //console.log(this.nuevoProveedorForm.get('cuit')?.value) para versiones de Angular de 14 hacia abajo
-  
-  
+   
   private setCodigo():void{
-    this.proveedorService.getNextCodigo().subscribe(
-      nextCodigo => {
-        this.nuevoProveedorForm.patchValue({codigo: nextCodigo.toString()});
-      },
-      error => {
-        console.error('Error al obtener el último código: ', error);
-      }
-    );
+    if (this.nuevoProveedorForm.controls.id.value == ''){
+      this.proveedorService.getNextCodigo().subscribe(
+        nextCodigo => {
+          this.nuevoProveedorForm.patchValue({codigo: nextCodigo.toString()});
+        },
+        error => {
+          console.error('Error al obtener el último código: ', error);
+        }
+      );
+    }
   }
 
   nuevoProveedorModal(): void{
+    this.clearForm();
     this.setCodigo();
   }
+
+  private clearForm(){
+    this.nuevoProveedorForm.setValue({      
+      id:'',
+      codigo:'',
+      razonSocial:'',
+      cuit:'',
+      domicilio:'',
+      condicionIva:''       
+    })
+  }
+
+  private loadForm(proveedor: Proveedor){
+    this.nuevoProveedorForm.patchValue({
+      id: proveedor.id ? proveedor.id.toString(): '',
+      codigo: proveedor.codigo,
+      razonSocial: proveedor.razonSocial,
+      cuit: proveedor.cuit,
+      domicilio: proveedor.domicilio, 
+      condicionIva: proveedor.condicionIva
+    });
+  }
+
+   botonRegistrar(){
+    this.registrar = true;
+    this.actualizar = false;
+  }  
+   botonActualizar(){
+    this.registrar = false;
+    this.actualizar = true;
+  }
+  
+
 
   get codigoField(): FormControl<string>{
     return this.nuevoProveedorForm.controls.codigo

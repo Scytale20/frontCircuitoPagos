@@ -11,12 +11,16 @@ export class ProveedoresService {
 
   constructor(private http: HttpClient) { }
 
-  getProveedores(): Observable<Proveedor[]> {
+  listadoProveedores(): Observable<Proveedor[]> {
     return this.http.get<Proveedor[]>(this.apiUrl);
 }
 
 registrarProveedor(proveedor: any): Observable<any>{
   return this.http.post<any>(`${this.apiUrl}/registrar`, proveedor);
+}
+
+modificarProveedor(proveedor: Proveedor):Observable<any>{
+  return this.http.put<any>(`${this.apiUrl}/modificar`, proveedor);
 }
 
 getLastCodigo(): Observable<number>{
