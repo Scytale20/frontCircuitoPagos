@@ -17,30 +17,34 @@ export class DashboardComponent {
 
     cards = [
         {
-          title: 'Pagos',          
-          icon: 'bi bi-graph-up-arrow',
+          title: 'Pagos',
+          route:'pagos',          
+          icon: 'bi bi-cash-coin',
           buttons: [
             { text: 'listado', link: 'pagos' },
             { text: 'boton prueba 2', link: '/' },            
           ]
         },
         {
-          title: 'Proveedores',          
-          icon: 'bi bi-graph-up-arrow',
+          title: 'Proveedores',        
+          route:'proveedores',  
+          icon: 'bi bi-clipboard-check',
           buttons: [
             { text: 'Listado', link: 'proveedores' },            
           ]
         },
         {
-          title: 'Cuentas Corrientes',          
-          icon: 'bi bi-graph-up-arrow',
+          title: 'Cuentas Corrientes',
+          route:'cuentas',          
+          icon: 'bi bi-newspaper',
           buttons: [
-            { text: 'Listado', link: '/' },            
+            { text: 'Listado', link: 'cuentas' },            
           ]
         },
         {
-          title: 'Finanzas',          
-          icon: 'bi bi-graph-up-arrow',
+          title: 'Finanzas', 
+          route:'finanzas',         
+          icon: 'bi bi-bar-chart-line',
           buttons: [
             { text: 'Cajas', link: '/' },            
             { text: 'Cheques', link: '/' },            

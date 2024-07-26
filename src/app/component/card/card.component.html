@@ -1,12 +1,12 @@
 <div class="card text-bg-light shadow">
-    <div class="card-body text-center" routerLink="/pagos">
+    <div class="card-body text-center" [routerLink]="route">
         <i [class]="icon"></i>
-        <h5 class="card-title text-center mt-2">{{ title }}</h5>
+        <h4 class="card-title text-center mt-3">{{ title }}</h4>
     </div>
 
-    <div class="d-flex justify-content-evenly mb-4">
+    <div class="nav nav-underline justify-content-evenly mb-4">
         @for(button of buttons; track button.text){
-        <a class="btn btn-primary" [routerLink]="button.link" >{{button.text}}</a>
+        <a class="nav-link" [routerLink]="button.link" >{{button.text}}</a>
     }
         
     </div>
