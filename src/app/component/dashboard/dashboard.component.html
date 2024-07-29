@@ -1,2 +1,11 @@
-
-
+<div class="container mt-5">
+    <div class="row">
+        @for(card of cards; track card.title){
+        <div class="col-5 mb-4">
+            <app-card title="{{card.title}}" route="{{card.route}}" icon="{{card.icon}}" [buttons]="card.buttons"></app-card>
+        </div>
+        <div class="col-1"></div>
+    }
+     
+    
+    

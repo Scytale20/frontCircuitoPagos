@@ -3,11 +3,17 @@
 /*----------MODAL-------------- */
 .bg-buttons{
     background-color: #41729F;        
+    
+}
+div button.agregar-button{
+    margin-left: 15vh;
+    font-size: 1.3rem;
+    
 }
 
-div button i.agregar{
+div button i.agregar-icon{
     font-size: 1.3rem;
-    margin-left: 15vh;
+    
 }
 
 .modal-content{
