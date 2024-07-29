@@ -1,0 +1,21 @@
+.bg-buttons{
+    background-color: #41729F;            
+}
+div button.agregar-button{
+    margin-left: 15vh;
+    font-size: 1.3rem;    
+}
+div button i.agregar-icon{
+    font-size: 1.3rem;
+    
+}
+.contenedor-tabla{
+    min-height: 80vh; 
+    max-height: 80vh;
+    min-width: 93vw;
+    max-width: 93vw;
+    margin-left: auto;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    background-color: #f8f9fa; 
+}

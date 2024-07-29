@@ -56,7 +56,6 @@ export class ProveedoresComponent implements OnInit {
       language:{
         searchPlaceholder:'Buscar proveedor'
       }
-
       //pageLength: 7,
       //paging: false,
       //ordering: false,

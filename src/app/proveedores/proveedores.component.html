@@ -148,8 +148,7 @@
         <td class="text-start">{{ proveedor.cuit }}</td>
         <td>{{ proveedor.domicilio }}</td>
         <td>{{ proveedor.condicionIva }}</td>
-        <td>
-          <!-- TODO CAMBIAR LA CLASE BTN A UN BOTON MAS CHICO PARA QUE REDUZCA EL TAMAÑO DE LA TABLA -->
+        <td>          
           <button class="btn text-primary" title="Editar Proveedor" data-bs-toggle="modal" data-bs-target="#proveedorModal"
             (click)="editarProveedor(i); botonActualizar()">
             <i class="bi bi-pencil-square" style="font-size: 1rem;"></i>
