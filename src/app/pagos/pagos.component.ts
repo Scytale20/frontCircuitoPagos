@@ -14,7 +14,24 @@ import { DataTablesModule } from 'angular-datatables';
 })
 export class PagosComponent {
 
-  titulosTabla: string[] = ['Fecha', 'N° de OP', 'Proveedor', 'Concepto', 'Importe']
-  ordenesPago: any[] = []
+  titulosTabla: { key: string, label: string }[] = [
+    { key: 'fecha', label: 'Fecha' },
+    { key: 'numeroDeOrden', label: 'N° de OP' },
+    { key: 'proveedor', label: 'Proveedor' },
+    { key: 'concepto', label: 'Concepto' },
+    { key: 'importe', label: 'Importe' },    
+  ];
+  ordenesPago: any[] = ['30-07-2024', '2552', 'Lucas', 'Sarasa', '10']
+  modalTarget: string = '#pagos'
+
+
+
+  nuevoPagoModal() {
+    console.log('Nuevo Proveedor Modal');
+  }
+
+  botonRegistrar() {
+    console.log('Botón Registrar');
+  }
 
 }

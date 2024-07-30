@@ -1,6 +1,6 @@
 <div class="container-fluid bg-buttons d-flex">
-    <button type="button" class="btn agregar-button text-white" title="Agregar" data-bs-toggle="modal" data-bs-target="#proveedorModal"
-      data-bs-whatever="@getbootstrap">      
+    <button type="button" class="btn agregar-button text-white" title="Agregar" data-bs-toggle="modal" [attr.data-bs-target]="target"
+      data-bs-whatever="@getbootstrap" (click)="onTraerNumero(); onCambiarBoton()">      
       <i class="agregar-icon bi bi-plus-lg text-white"></i>    
     </button>
   </div>
@@ -8,34 +8,27 @@
 
 <div class="contenedor-tabla container mt-2 p-2 border rounded">
     <table class="table shadow-sm table-sm table-hover border" datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger">
-      <thead class="table-light">
-        <!-- <tr>
-            <th>Fecha</th>
-            <th>N° de OP</th>
-            <th>Proveedor</th>
-            <th>Concepto</th>
-            <th>Importe</th>
-        </tr> -->
+      <thead class="table-light">        
         <tr class="">
          @for(titulo of titulosColumnas; track titulo){   
-          <th>{{ titulo }}</th>
+          <th>{{ titulo.label }}</th>
         }
+        <th>Acciones</th>
         </tr>
       </thead>
-      <tbody>
-        <!-- <tr>
-            <td>29-07-2024</td>
-            <td>2552</td>
-            <td>Pablo</td>
-            <td>Algo para camiones</td>
-            <td>$190.000</td>
-        </tr> -->
+      <tbody>        
+        @for(row of datosTabla; track row.id; let i = $index){
         <tr>
-          @for(dato of datosTabla; track dato){  
-            <td>{{ dato }}</td>
-        }
-        
+          @for(datoTitulo of titulosColumnas; track datoTitulo){  
+            <td>{{ row[datoTitulo.key] }}</td>            
+        }        
+        <td>          
+          <button class="btn text-primary" title="Editar" data-bs-toggle="modal" [attr.data-bs-target]="target" (click)="onEditar(i); onCambiarActualiar()">
+            <i class="bi bi-pencil-square" style="font-size: 1rem;"></i>
+          </button>
+        </td>
         </tr>
+      }
       </tbody>
     </table>
 </div>

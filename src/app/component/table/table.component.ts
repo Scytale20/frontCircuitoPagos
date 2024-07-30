@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { DataTablesModule } from 'angular-datatables';
 import { Subject } from 'rxjs';
 
@@ -9,13 +9,21 @@ import { Subject } from 'rxjs';
   templateUrl: './table.component.html',
   styleUrl: './table.component.css'
 })
-export class TableComponent implements OnInit{
+export class TableComponent implements OnInit, OnDestroy{
 
   dtoptions: any = {};
   dtTrigger:Subject<any> = new Subject<any>();
   
-  @Input() titulosColumnas: string[] = [];
+  @Input() target!: string;
+  @Input() titulosColumnas: { key: string, label: string }[] = [];
   @Input() datosTabla: any[] = [];
+
+  @Output() traerNumero = new EventEmitter<void>();
+  @Output() cambiarRegistrar = new EventEmitter<boolean>();
+  @Output() cambiarActualizar = new EventEmitter<boolean>();
+  @Output() editar = new EventEmitter<number>();
+  
+
 
 
   ngOnInit(): void {
@@ -34,20 +42,36 @@ export class TableComponent implements OnInit{
         lengthMenu: "_MENU_ Registros",
         info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
       }
-
       //pageLength: 7,
       //paging: false,
       //ordering: false,
       //searching: false,
       //lengthChange:false      
-    }
-    this.dtTrigger.next(this.dtoptions);
+    }        
   }
+    
+  ngOnChanges(): void {
+    if (this.datosTabla.length > 0) {
+      this.dtTrigger.next(null);
+    }
+  } 
 
   ngOnDestroy(): void {
     // Desuscribir el Subject para evitar fugas de memoria
-    this.dtTrigger.unsubscribe();
-    
+    this.dtTrigger.unsubscribe();    
+  }
+
+  onTraerNumero(){
+    this.traerNumero.emit();
+  }
+  onCambiarBoton(){
+    this.cambiarRegistrar.emit()
+  }
+  onEditar(index: any){
+    this.editar.emit(index);
+  }
+  onCambiarActualiar(){
+    this.cambiarActualizar.emit();
   }
 
 
