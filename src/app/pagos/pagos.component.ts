@@ -21,7 +21,7 @@ export class PagosComponent {
     { key: 'concepto', label: 'Concepto' },
     { key: 'importe', label: 'Importe' },    
   ];
-  ordenesPago: any[] = ['30-07-2024', '2552', 'Lucas', 'Sarasa', '10']
+  ordenesPago: any[] = []
   modalTarget: string = '#pagos'
 
 
