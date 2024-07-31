@@ -21,8 +21,8 @@ export class DashboardComponent {
           route:'pagos',          
           icon: 'bi bi-cash-coin',
           buttons: [
-            { text: 'listado', link: 'pagos' },
-            { text: 'boton prueba 2', link: '/' },            
+            { text: 'Ordenes de Pagos', link: 'pagos' },
+                        
           ]
         },
         {
@@ -31,6 +31,7 @@ export class DashboardComponent {
           icon: 'bi bi-clipboard-check',
           buttons: [
             { text: 'Listado', link: 'proveedores' },            
+            { text: 'Facturas', link: '/' },            
           ]
         },
         {
@@ -47,9 +48,8 @@ export class DashboardComponent {
           icon: 'bi bi-bar-chart-line',
           buttons: [
             { text: 'Cajas', link: '/' },            
-            { text: 'Cheques', link: '/' },            
-
-            
+            { text: 'Bancos', link: '/' }, 
+            { text: 'Cheques', link: '/' }            
           ]
         }
       ];

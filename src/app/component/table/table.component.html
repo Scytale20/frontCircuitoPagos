@@ -1,0 +1,34 @@
+<div class="container-fluid bg-buttons d-flex">
+    <button type="button" class="btn agregar-button text-white" title="Agregar" data-bs-toggle="modal" [attr.data-bs-target]="target"
+      data-bs-whatever="@getbootstrap" (click)="onTraerNumero(); onCambiarBoton()">      
+      <i class="agregar-icon bi bi-plus-lg text-white"></i>    
+    </button>
+  </div>
+
+
+<div class="contenedor-tabla container mt-2 p-2 border rounded">
+    <table class="table shadow-sm table-sm table-hover border" datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger">
+      <thead class="table-light">        
+        <tr class="">
+         @for(titulo of titulosColumnas; track titulo){   
+          <th>{{ titulo.label }}</th>
+        }
+        <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>        
+        @for(row of datosTabla; track row.id; let i = $index){
+        <tr>
+          @for(datoTitulo of titulosColumnas; track datoTitulo){  
+            <td>{{ row[datoTitulo.key] }}</td>            
+        }        
+        <td>          
+          <button class="btn text-primary" title="Editar" data-bs-toggle="modal" [attr.data-bs-target]="target" (click)="onEditar(i); onCambiarActualiar()">
+            <i class="bi bi-pencil-square" style="font-size: 1rem;"></i>
+          </button>
+        </td>
+        </tr>
+      }
+      </tbody>
+    </table>
+</div>

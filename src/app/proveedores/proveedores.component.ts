@@ -6,6 +6,7 @@ import { DataTablesModule } from "angular-datatables";
 import { Subject } from 'rxjs';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgClass } from '@angular/common';
+import { TableComponent } from '../component/table/table.component';
 
 
 
@@ -15,12 +16,21 @@ import { NgClass } from '@angular/common';
 @Component({
   selector: 'app-proveedores',
   standalone: true,
-  imports: [HttpClientModule, DataTablesModule, ReactiveFormsModule, NgClass],
+  imports: [HttpClientModule, DataTablesModule, ReactiveFormsModule, NgClass, TableComponent],
   templateUrl: './proveedores.component.html',
   styleUrl: './proveedores.component.css'
 })
 export class ProveedoresComponent implements OnInit {
 
+
+  modalTarget: string = '#proveedorModal'
+  titulosTabla: { key: string, label: string }[] = [
+    { key: 'codigo', label: 'Código' },
+    { key: 'razonSocial', label: 'Razón Social' },
+    { key: 'cuit', label: 'CUIT' },
+    { key: 'domicilio', label: 'Domicilio' },
+    { key: 'condicionIva', label: 'Condición IVA' },    
+  ];
 
   dtoptions: any = {};
   dtTrigger:Subject<any> = new Subject<any>();
@@ -43,41 +53,14 @@ export class ProveedoresComponent implements OnInit {
   });  
   
   
-  ngOnInit(): void {
-    this.dtoptions = {
-      pagingType:'full_numbers',
-      lengthMenu:[5, 10, 15, 20, 25],
-      pageLength:10,
-      order:[1, 'asc'],
-      destroy: true, //para que pueda cargarse luego de hacer una modificacion, sin que se produzcan errores. 
-      scrollY: '59vh',
-      scrollColapse: true,
-      autoWidth: false,
-      language:{
-        searchPlaceholder:'Buscar proveedor'
-      }
-
-      //pageLength: 7,
-      //paging: false,
-      //ordering: false,
-      //searching: false,
-      //lengthChange:false
-       
-    };
+  ngOnInit(): void {    
     // Llama al método para obtener los proveedores al inicializar el componente
     this.getProveedores();     
   }
 
-  ngOnDestroy(): void {
-    // Desuscribir el Subject para evitar fugas de memoria
-    this.dtTrigger.unsubscribe();
-    
-  }
-
   private getProveedores():void{
     this.proveedorService.listadoProveedores().subscribe(data => {
-      this.proveedores = data;
-      this.dtTrigger.next(this.dtoptions);      
+      this.proveedores = data;      
     });      
   }  
   
