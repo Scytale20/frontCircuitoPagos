@@ -30,8 +30,8 @@ export class DashboardComponent {
           route:'proveedores',  
           icon: 'bi bi-clipboard-check',
           buttons: [
-            { text: 'Listado', link: 'proveedores' },            
-            { text: 'Facturas', link: '/' },            
+            { text: 'Listado', link: 'proveedores/listado' },            
+            { text: 'Facturas', link: 'proveedores/facturas'},            
           ]
         },
         {

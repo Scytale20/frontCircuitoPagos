@@ -1,22 +1,20 @@
-
-
 /*-------  MODAL  ----------*/
 .modal-content{
     background-color: hsla(220,10%,98%,1);
 }
 
 .header{
-    background-image: url("../../assets/img/encabezado.png");
+    background-image: url("../../../assets/img/encabezado.png");
     background-repeat: no-repeat;
     background-size: cover;
-    height: 172px;        
+    height: 50px;        
 }
-.form-title{
-    padding-top: 90px;
+h3.form-title{    
+    color: whitesmoke;
 }
 
 .color-footer{
-    background-color: #0F4578;
+    background-color: #0b2e50;
     background-size: cover;
     height: 35px;
     width: auto;
@@ -24,7 +22,3 @@
 }
 
 /*-------CIERRA MODAL----------*/
-
-
-
-
