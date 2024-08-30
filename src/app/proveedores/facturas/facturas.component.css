@@ -1,16 +1,28 @@
 /*-------  MODAL  ----------*/
 .modal-content{
-    background-color: hsla(220,10%,98%,1);
+    background-color: #f5f5fa;
 }
 
 .header{
-    background-image: url("../../../assets/img/encabezado.png");
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-color: #0b2e50;
     height: 50px;        
 }
 h3.form-title{    
     color: whitesmoke;
+}
+
+.modal-body{
+    background-image: url("../../../assets/img/WICO_blanco_redondo.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: fit-content; 
+    
+    
+}
+
+div button.agregar-button{
+    margin-top: 4.1vh;
+    font-size: 0.9rem;    
 }
 
 .color-footer{

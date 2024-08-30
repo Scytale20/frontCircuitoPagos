@@ -17,5 +17,9 @@ div button i.agregar-icon{
     margin-left: auto;
     overflow-y: hidden;
     overflow-x: hidden;
-    background-color: #f8f9fa; 
+    background-color: #f5f5fa;
+    background-image: url("../../../assets/img/WICO_blanco.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: fit-content;  
 }

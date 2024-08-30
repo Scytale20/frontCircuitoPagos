@@ -2,7 +2,7 @@ import { Proveedor } from "./proveedor.model";
 
 export interface Factura{
     id?: number;
-    proveedor: Proveedor
+    nombre: Proveedor
     fechaEmision: Date | string;
     fechaVencimiento: Date | string;
     concepto: string;
@@ -12,5 +12,6 @@ export interface Factura{
     alicuotaIva: number;
     totalFactura: number;
     numeroFactura: string;
-    letraFactura: string; 
+    letraFactura: string;
+    estado: string; 
 }
