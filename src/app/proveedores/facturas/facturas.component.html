@@ -181,6 +181,7 @@
                     class="form-control text-muted"
                     id="totalFactura"
                     formControlName="totalFactura"
+                    readonly
                   />
                 </div>
               </div>
@@ -190,12 +191,12 @@
                 <div class="row">
                   <div class="col-sm-7"></div>
                   <div class="col-sm-2 fs-5">Subtotal:$</div>
-                  <div class="col-sm-3 fs-5 text-end">1.000.000,00</div>
+                  <div class="col-sm-3 fs-5 text-end">{{ subtotal | number:'1.2-2' }}</div>
                 </div>
                 <div class="row">
                   <div class="col-sm-7"></div>
                   <div class="col-sm-2 fs-5">Impuestos: $</div>
-                  <div class="col-sm-3 fs-5 text-end">210.000,00</div>
+                  <div class="col-sm-3 fs-5 text-end">{{ impuestos | number:'1.2-2' }}</div>
                 </div>
                 <div class="row">
                   <div class="col-sm-7"></div>
@@ -206,7 +207,7 @@
                   <div class="col-sm-7"></div>
                   <div class="col-sm-2 fs-4 fw-bolder">Total: $</div>
                   <div class="col-sm-3 fs-4 fw-bolder text-end">
-                    1.210.000,00
+                    {{ total | number:'1.2-2' }}
                   </div>
                 </div>
               </div>

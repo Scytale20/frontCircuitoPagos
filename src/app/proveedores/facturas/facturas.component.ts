@@ -5,11 +5,12 @@ import { Factura } from '../../core/models/factura.model';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Proveedor } from '../../core/models/proveedor.model';
 import { ProveedoresService } from '../../core/Service/proveedores.service';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-facturas',
   standalone: true,
-  imports: [TableComponent, DataTablesModule, ReactiveFormsModule],
+  imports: [TableComponent, DataTablesModule, ReactiveFormsModule, DecimalPipe],
   templateUrl: './facturas.component.html',
   styleUrl: './facturas.component.css'
 })
@@ -28,6 +29,9 @@ export class FacturasComponent{
 
   proveedores: Proveedor[] = [];
   facturas: Factura[] = []; 
+  subtotal: number = 0;
+  impuestos:number = 0;
+  total: number = 0;
   registrar: Boolean = false;
   actualizar: Boolean = false;
 
@@ -53,6 +57,7 @@ export class FacturasComponent{
 
   ngOnInit(): void{
     this.getProveedores();
+    this.onFormValueChange();
   }
 
   private getProveedores():void{
@@ -60,6 +65,24 @@ export class FacturasComponent{
       this.proveedores = data;      
     });      
   }  
+
+  onFormValueChange(): void {
+    this.nuevaFacturaForm.valueChanges.subscribe(
+      values =>{
+        const cantidad = parseFloat(values.cantidad ?? '0');
+        const precioUnitario = parseFloat(values.precioUnitario ?? '0');
+        const alicuotaIva = parseFloat(values.alicuotaIva ?? '0');
+
+         this.subtotal = cantidad * precioUnitario;
+         this.impuestos = this.subtotal * alicuotaIva/100;
+         this.total = this.subtotal + this.impuestos;
+
+        this.nuevaFacturaForm.patchValue({
+          totalFactura: this.total.toFixed(2)
+        }, {emitEvent: false});
+      }
+    )
+  }
   
 
   onProveedorChange(event: any){
@@ -73,8 +96,8 @@ export class FacturasComponent{
 
   }
 
-  registrarFactura(){
-    console.log(this.nuevaFacturaForm.value)
+  registrarFactura(){    
+    console.log(this.nuevaFacturaForm.value);
   }
 
   editarProveedor(indice: number){
