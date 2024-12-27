@@ -2,15 +2,15 @@ import { Component, inject, OnInit } from '@angular/core';
 import { TableComponent } from '../../component/table/table.component';
 import { DataTablesModule } from 'angular-datatables';
 import { Factura } from '../../core/models/factura.model';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Proveedor } from '../../core/models/proveedor.model';
 import { ProveedoresService } from '../../core/Service/proveedores.service';
-import { DecimalPipe } from '@angular/common';
+import { DecimalPipe, NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-facturas',
   standalone: true,
-  imports: [TableComponent, DataTablesModule, ReactiveFormsModule, DecimalPipe],
+  imports: [TableComponent, DataTablesModule, ReactiveFormsModule, DecimalPipe, NgClass],
   templateUrl: './facturas.component.html',
   styleUrl: './facturas.component.css'
 })
@@ -40,18 +40,19 @@ export class FacturasComponent{
 
   nuevaFacturaForm = this.formBuilder.nonNullable.group({
     id: ['null'],
-    nombre:['null'],
-    cuit:[''],
+    nombre:['null', [Validators.required]],
+    cuit:['', [Validators.required]],
     fechaEmision:[new Date().toISOString().substring(0, 10)], 
     fechaVencimiento:[new Date().toISOString().substring(0, 10)],
-    descripcion:[''],
-    cantidad:['0'],
-    unidadMedida:['Un'],
-    precioUnitario:['0'],
-    alicuotaIva:['21'],
-    totalFactura:['0'],
-    numeroFactura:['00001-00000000'],
-    letraFactura:['A'],
+    concepto:['', [Validators.required]],
+    cantidad:[0, [Validators.required, Validators.min(1), Validators.max(999999)]],
+    unidadMedida:['Un', [Validators.required, Validators.pattern('^[a-zA-Z]+$')]], //para validar que sean solo letras
+    precioUnitario:[0, [Validators.required, Validators.min(0.01), Validators.max(99999999)]],
+    alicuotaIva:[21, [Validators.required]],
+    subtotal:[0],
+    totalFactura:[0, [Validators.required]],
+    numeroFactura:['00001-00000000', [Validators.required, Validators.maxLength(14), Validators.minLength(13)]],
+    letraFactura:['A', [Validators.required]],
     estado:['Pendiente']
   });
 
@@ -69,16 +70,17 @@ export class FacturasComponent{
   onFormValueChange(): void {
     this.nuevaFacturaForm.valueChanges.subscribe(
       values =>{
-        const cantidad = parseFloat(values.cantidad ?? '0');
-        const precioUnitario = parseFloat(values.precioUnitario ?? '0');
-        const alicuotaIva = parseFloat(values.alicuotaIva ?? '0');
+        const cantidad = values.cantidad ?? 0;
+        const precioUnitario = values.precioUnitario ?? 0;
+        const alicuotaIva = values.alicuotaIva ?? 0;
 
          this.subtotal = cantidad * precioUnitario;
          this.impuestos = this.subtotal * alicuotaIva/100;
          this.total = this.subtotal + this.impuestos;
 
         this.nuevaFacturaForm.patchValue({
-          totalFactura: this.total.toFixed(2)
+          subtotal: parseFloat(this.subtotal.toFixed(2)),
+          totalFactura: parseFloat(this.total.toFixed(2)) 
         }, {emitEvent: false});
       }
     )
@@ -98,6 +100,8 @@ export class FacturasComponent{
 
   registrarFactura(){    
     console.log(this.nuevaFacturaForm.value);
+    this.clearForm();
+    //TODO resolver los tipos de datos a enviar en el form, ya sea en este metodo o en otro parseFloat en caso de string a number
   }
 
   editarProveedor(indice: number){
@@ -108,7 +112,31 @@ export class FacturasComponent{
   }
 
   nuevaFacturaModal(){
-    console.log("Aca va Clear form")
+    
+  }
+
+  private clearForm(){
+    this.nuevaFacturaForm.setValue({
+      id: 'null',
+      nombre: 'null',
+      cuit: '',
+      fechaEmision: new Date().toISOString().substring(0, 10),
+      fechaVencimiento: new Date().toISOString().substring(0, 10),
+      concepto: '',
+      cantidad: 0,
+      unidadMedida: 'Un',
+      precioUnitario: 0,
+      alicuotaIva: 21,
+      subtotal: 0,
+      totalFactura: 0,
+      numeroFactura: '00001-00000000',
+      letraFactura: 'A',
+      estado: 'Pendiente'
+    });
+  } 
+
+  registrarNuevoProveedor(){
+    console.log('aca va un proveedor nuevo cuando no se encuentra en el Dropdown');
   }
 
 
@@ -120,5 +148,27 @@ export class FacturasComponent{
     this.registrar = false;
     this.actualizar = true;
   }
+
+  get proveedorField(): FormControl<string>{
+    return this.nuevaFacturaForm.controls.nombre
+  }
+  get cantidadField(): FormControl<number>{
+    return this.nuevaFacturaForm.controls.cantidad
+  }
+  get numeroFacturaField(): FormControl<string>{
+      return this.nuevaFacturaForm.controls.numeroFactura
+    }
+  get conceptoField(): FormControl<string>{
+      return this.nuevaFacturaForm.controls.concepto
+    }
+  get unidadField(): FormControl<string>{
+      return this.nuevaFacturaForm.controls.unidadMedida
+    }
+  get precioField(): FormControl<number>{
+      return this.nuevaFacturaForm.controls.precioUnitario
+    }
+  get impuestoField(): FormControl<number>{
+      return this.nuevaFacturaForm.controls.alicuotaIva
+    }  
 
 }

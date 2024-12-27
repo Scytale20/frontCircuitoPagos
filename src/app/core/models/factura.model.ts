@@ -10,6 +10,7 @@ export interface Factura{
     unidadMedida: string;
     precioUnitario: number;
     alicuotaIva: number;
+    subtotal: number;
     totalFactura: number;
     numeroFactura: string;
     letraFactura: string;

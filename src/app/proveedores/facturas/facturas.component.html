@@ -49,14 +49,18 @@
                     id="Proveedor"
                     formControlName="nombre"
                     (change)="onProveedorChange($event)"
+                    [ngClass]="{
+                      'is-invalid': proveedorField.errors && proveedorField.touched                       
+                    }"
                   >@for(proveedor of proveedores; track proveedor){
                     <option [value]="proveedor.razonSocial">{{proveedor.razonSocial}}</option>
-                  }
+                    
+                  }  
 
                   </select>
                 </div>
                 <div class="col-sm-2 d-flex align-items-center">
-                  <button class="btn btn-success btn-sm agregar-button">
+                  <button type="button" class="btn btn-success btn-sm agregar-button" (click)="registrarNuevoProveedor()">
                     <i class="agregar-icon bi bi-plus-lg"></i>
                   </button>
                 </div>
@@ -86,6 +90,10 @@
                     class="form-control text-muted"
                     id="numeroFactura"
                     formControlName="numeroFactura"
+                    maxlength="14"
+                    [ngClass]="{
+                      'is-invalid': numeroFacturaField.errors && numeroFacturaField.touched                       
+                    }"
                   />
                 </div>
                 <div class="mb-5 col-sm-2">
@@ -121,21 +129,30 @@
                     >Cantidad:</label
                   >
                   <input
-                    type="text"
+                    type="number"
                     class="form-control text-muted"
                     id="cantidad"
                     formControlName="cantidad"
+                    min="1"
+                    max="999999"                    
+                    [ngClass]="{
+                      'is-invalid': cantidadField.errors && cantidadField.touched                       
+                    }"
                   />
                 </div>
                 <div class="mb-2 col-sm-5">
-                  <label for="descripcion" class="form-label text-muted"
+                  <label for="concepto" class="form-label text-muted"
                     >Descripcion:</label
                   >
                   <input
                     type="text"
                     class="form-control text-muted"
-                    id="descripcion"
-                    formControlName="descripcion"
+                    id="concepto"
+                    formControlName="concepto"
+                    maxlength="250"
+                    [ngClass]="{
+                      'is-invalid': conceptoField.errors && conceptoField.touched                       
+                    }"
                   />
                 </div>
 
@@ -148,6 +165,11 @@
                     class="form-control text-muted"
                     id="unidadMedida"
                     formControlName="unidadMedida"
+                    maxlength="4"
+                    pattern="^[a-zA-Z]+$"
+                    [ngClass]="{
+                      'is-invalid': unidadField.errors && unidadField.touched                       
+                    }"
                   />
                 </div>
                 <div class="mb-2 col-sm-2">
@@ -155,10 +177,15 @@
                     >Precio Unitario:</label
                   >
                   <input
-                    type="text"
+                    type="number"
                     class="form-control text-muted"
                     id="precioUnitario"
                     formControlName="precioUnitario"
+                    min="0.01"
+                    max="99999999"                    
+                    [ngClass]="{
+                      'is-invalid': precioField.errors && precioField.touched                       
+                    }"
                   />
                 </div>
                 <div class="mb-2 col-sm-1">
@@ -166,10 +193,13 @@
                     >Impuesto:</label
                   >
                   <input
-                    type="text"
+                    type="number"
                     class="form-control text-muted"
                     id="alicuotaIva"
                     formControlName="alicuotaIva"
+                    [ngClass]="{
+                      'is-invalid': impuestoField.errors && impuestoField.touched                       
+                    }"
                   />
                 </div>
                 <div class="mb-2 col-sm-2">
@@ -177,12 +207,13 @@
                     >Total:</label
                   >
                   <input
-                    type="text"
+                    type="number"
                     class="form-control text-muted"
                     id="totalFactura"
                     formControlName="totalFactura"
                     readonly
                   />
+                  <input type="hidden" formControlName="subtotal" id="subtotal" >
                 </div>
               </div>
               <div class="row"></div>
