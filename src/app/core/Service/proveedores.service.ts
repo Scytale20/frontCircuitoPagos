@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http' ;
-import { Observable } from 'rxjs';
+import { Observable, Subject, tap } from 'rxjs';
 import { Proveedor } from '../models/proveedor.model';
 
 @Injectable({
@@ -8,6 +8,7 @@ import { Proveedor } from '../models/proveedor.model';
 })
 export class ProveedoresService {
   private apiUrl = 'http://localhost:8080/proveedores'; // URL de la API
+  private nuevoProveedorSubject = new Subject<Proveedor>(); //para comunicacion interna
 
   constructor(private http: HttpClient) { }
 
@@ -31,6 +32,12 @@ getNextCodigo(): Observable<number>{
   return this.http.get<number>(`${this.apiUrl}/nextCodigo`);
 }
 
+
+//comunicacion entre componentes
+
+getNuevoProveedor$(): Observable<Proveedor>{
+  return this.nuevoProveedorSubject.asObservable();
+}
 
 
 

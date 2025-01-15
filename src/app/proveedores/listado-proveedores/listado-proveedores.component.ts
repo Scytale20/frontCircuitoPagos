@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
 import { Proveedor } from '../../core/models/proveedor.model';
 import { ProveedoresService } from '../../core/Service/proveedores.service';
 import { HttpClientModule } from '@angular/common/http';
@@ -7,6 +7,8 @@ import { Subject } from 'rxjs';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgClass } from '@angular/common';
 import { TableComponent } from '../../component/table/table.component';
+import { Modal } from 'bootstrap';
+import { FacturasService } from '../../core/Service/facturas.service';
 
 
 @Component({
@@ -32,10 +34,12 @@ export class ListadoProveedoresComponent {
   proveedores: Proveedor[] = []; 
   registrar: Boolean = false;
   actualizar: Boolean = false;
+  @ViewChild('proveedorModal') proveedorModal!: ElementRef;
   
   
 
   private proveedorService = inject(ProveedoresService);
+  private facturasService = inject(FacturasService);
   private formBuilder = inject(FormBuilder);
 
   nuevoProveedorForm = this.formBuilder.nonNullable.group({
@@ -50,7 +54,7 @@ export class ListadoProveedoresComponent {
   
   ngOnInit(): void {    
     // Llama al método para obtener los proveedores al inicializar el componente
-    this.getProveedores();     
+    this.getProveedores();        
   }
 
   private getProveedores():void{
@@ -69,7 +73,7 @@ export class ListadoProveedoresComponent {
       if(this.nuevoProveedorForm.valid){
         this.proveedorService.registrarProveedor(nuevoProveedor).subscribe(
           (nuevoProveedor: Proveedor) => {            
-           this.proveedores.push(nuevoProveedor);          
+           this.proveedores.push(nuevoProveedor);                  
             console.log('Proveedor registrado: ', nuevoProveedor)
           },
           error => {
@@ -143,6 +147,12 @@ export class ListadoProveedoresComponent {
    botonActualizar(){
     this.registrar = false;
     this.actualizar = true;
+  }
+
+  abrirModalProveedor() {
+    const modalElement = this.proveedorModal.nativeElement;
+    const bootstrapModal = new Modal(modalElement);
+    bootstrapModal.show();
   }
   
 

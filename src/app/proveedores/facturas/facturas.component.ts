@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { TableComponent } from '../../component/table/table.component';
 import { DataTablesModule } from 'angular-datatables';
 import { Factura } from '../../core/models/factura.model';
@@ -6,6 +6,8 @@ import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angu
 import { Proveedor } from '../../core/models/proveedor.model';
 import { ProveedoresService } from '../../core/Service/proveedores.service';
 import { DecimalPipe, NgClass } from '@angular/common';
+import { ProveedoresComponent } from '../proveedores.component';
+import { FacturasService } from '../../core/Service/facturas.service';
 
 @Component({
   selector: 'app-facturas',
@@ -34,9 +36,11 @@ export class FacturasComponent{
   total: number = 0;
   registrar: Boolean = false;
   actualizar: Boolean = false;
+  
 
   private formBuilder = inject(FormBuilder);
   private proveedorService = inject(ProveedoresService);
+  private facturasService = inject(FacturasService);
 
   nuevaFacturaForm = this.formBuilder.nonNullable.group({
     id: ['null'],
@@ -56,9 +60,17 @@ export class FacturasComponent{
     estado:['Pendiente']
   });
 
+  proveedorFormDesdeFactura = this.formBuilder.nonNullable.group({
+    id: [''],    
+    razonSocial: ['', [Validators.required]],
+    cuit:['', [Validators.required, Validators.maxLength(11), Validators.minLength(11) ]],    
+    condicionIva: ['', [Validators.required]]
+  });
+
   ngOnInit(): void{
     this.getProveedores();
     this.onFormValueChange();
+    
   }
 
   private getProveedores():void{
@@ -104,7 +116,7 @@ export class FacturasComponent{
     //TODO resolver los tipos de datos a enviar en el form, ya sea en este metodo o en otro parseFloat en caso de string a number
   }
 
-  editarProveedor(indice: number){
+  editarFactura(indice: number){
     let factura: Factura = this.facturas[indice];
     console.log("Aca va el Load Form");
     
@@ -135,11 +147,6 @@ export class FacturasComponent{
     });
   } 
 
-  registrarNuevoProveedor(){
-    console.log('aca va un proveedor nuevo cuando no se encuentra en el Dropdown');
-  }
-
-
   botonRegistrar(){
     this.registrar = true;
     this.actualizar = false;
@@ -147,6 +154,10 @@ export class FacturasComponent{
    botonActualizar(){
     this.registrar = false;
     this.actualizar = true;
+  }
+
+  registrarProveedorDesdeFactura(){
+    console.log(this.proveedorFormDesdeFactura.value)
   }
 
   get proveedorField(): FormControl<string>{
@@ -169,6 +180,16 @@ export class FacturasComponent{
     }
   get impuestoField(): FormControl<number>{
       return this.nuevaFacturaForm.controls.alicuotaIva
-    }  
+    }
+  
+  get razonSocialField(): FormControl<string>{
+      return this.proveedorFormDesdeFactura.controls.razonSocial
+    }
+  get cuitField(): FormControl<string>{
+      return this.proveedorFormDesdeFactura.controls.cuit
+    }
+  get condicionIvaField(): FormControl<string>{
+      return this.proveedorFormDesdeFactura.controls.condicionIva
+    }
 
 }
